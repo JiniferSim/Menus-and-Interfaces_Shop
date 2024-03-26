@@ -4,15 +4,23 @@ using UnityEngine;
 
 public class Collectable : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private void OnTriggerEnter(Collider other)
     {
-        
+        if (other.CompareTag("Player"))
+        {
+            gameObject.SetActive(false);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    void Collect()
     {
-        
+        // Optional: You can add actions here, such as increasing the score
+        // For example:
+        // GameManager.instance.AddScore(scoreValue);
+
+        // Play a sound (optional)
+        // AudioManager.instance.PlayCollectSound();
+
+        // Deactivate the collectible object
     }
 }
