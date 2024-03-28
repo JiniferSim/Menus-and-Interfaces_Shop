@@ -7,33 +7,31 @@ public class PlayerRotation : MonoBehaviour
     public Camera cam;
     public float maxLength;
 
-    private Ray rayMouse;
-    private Vector3 pos;
-    private Vector3 direction;
-    private Quaternion rotation;
+    public float horizontalSpeed = 1f;
+    public float verticalSpeed = 1f;
+    private float xRotation = 0.0f;
+    private float yRotation = 0.0f;
 
     void Update()
     {
-        if (cam != null)
+        // Cursor lock
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            RaycastHit hit;
-            var mousePos = Input.mousePosition;
-            rayMouse = cam.ScreenPointToRay(mousePos);
-            if (Physics.Raycast(rayMouse.origin, rayMouse.direction, out hit, maxLength))
-            {
-                RotateToMouseDirection(gameObject, hit.point);
-            }
-            else
-            {
-                var pos = rayMouse.GetPoint(maxLength);
-            }
+            Cursor.lockState = CursorLockMode.None;
         }
-    }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+        }
 
-    void RotateToMouseDirection(GameObject obj, Vector3 destination)
-    {
-        direction = destination - obj.transform.position;
-        rotation = Quaternion.LookRotation(direction);
-        obj.transform.localRotation = Quaternion.Lerp(obj.transform.rotation, rotation, 1);
+        //Camera movement
+        float mouseX = Input.GetAxis("Mouse X") * horizontalSpeed;
+        float mouseY = Input.GetAxis("Mouse Y") * verticalSpeed;
+
+        yRotation += mouseX;
+        xRotation -= mouseY;
+        xRotation = Mathf.Clamp(xRotation, -90, 90);
+
+        cam.transform.eulerAngles = new Vector3(xRotation, yRotation, 0.0f);
     }
 }
