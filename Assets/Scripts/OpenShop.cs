@@ -5,6 +5,7 @@ using UnityEngine;
 public class OpenShop : MonoBehaviour
 {
     public Canvas canvasToActivate;
+    public Canvas canvasToDisactivate;
     void Update()
     {
         // Check if the canvas is assigned
@@ -12,6 +13,15 @@ public class OpenShop : MonoBehaviour
         {
             // Activate the canvas
             canvasToActivate.gameObject.SetActive(true);
+            //Disactivate canvas
+            canvasToDisactivate.gameObject.SetActive(false);
+        }
+
+        if(Input.GetKey(KeyCode.Escape))
+        {
+            canvasToActivate.gameObject.SetActive(false);
+
+            canvasToDisactivate.gameObject.SetActive(true);
         }
     }
 }
