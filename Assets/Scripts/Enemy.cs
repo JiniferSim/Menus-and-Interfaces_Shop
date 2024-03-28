@@ -40,14 +40,14 @@ public class Enemy : MonoBehaviour
             rb.MovePosition(pos);
         }
         transform.LookAt(player);
-        animator.SetTrigger("Attack");
+        animator.SetTrigger("Reset");
     }
     private void Update()
     {
         if (!canAttack && Time.time - lastAttackTime > attackSpeed)
         {
             canAttack = true;
-            animator.SetTrigger("Attack");
+            animator.SetTrigger("Reset");
         }
     }
     private void OnTriggerEnter(Collider other)
